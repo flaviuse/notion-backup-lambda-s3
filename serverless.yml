@@ -1,0 +1,24 @@
+service: cron-job-example
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: beta
+  region: eu-west-3
+
+functions:
+  notion-backup:
+    description: Example lambda function
+    handler: index.handler
+    timeout: 300
+    environment:
+      TOKEN: ${TOKEN}
+      SPACE_ID: ${SPACE_ID}
+      EXPORT_TYPE: ${EXPORT_TYPE}
+      BUCKET_NAME: ${BUCKET_NAME}
+      ACCESS_KEY_ID: ${ACCESS_KEY_ID}
+      SECRET_ACCESS_KEY: ${SECRET_ACCESS_KEY}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      EMAIL: ${EMAIL}
+    events:
+      - schedule: cron(0 7 * * ? *)
