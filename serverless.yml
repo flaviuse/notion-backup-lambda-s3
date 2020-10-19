@@ -1,15 +1,15 @@
-service: cron-job-example
+service: cron
 
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: beta
   region: eu-west-3
+  stage: prod
 
 functions:
   notion-backup:
-    description: Example lambda function
-    handler: index.handler
+    description: cron notion workspace backup
+    handler: dist/index.handler
     timeout: 300
     environment:
       TOKEN: ${TOKEN}
@@ -21,4 +21,4 @@ functions:
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       EMAIL: ${EMAIL}
     events:
-      - schedule: cron(0 7 * * ? *)
+      - schedule: rate(2 days)
